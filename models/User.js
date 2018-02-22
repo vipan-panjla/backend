@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
   picture: {type:String, default: 'uploads/user.png'}
 }, { timestamps: true });
 
+/**
+ * Update date changing on every update to user
+ * Adding token if not present
+ */
 userSchema.pre('validate', function(next) {
   this.updated = new Date();
   if (!this.token) {
@@ -47,20 +51,6 @@ userSchema.methods.comparePassword = function comparePassword(candidatePassword,
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
-};
-
-/**
- * Helper method for getting user's gravatar.
- */
-userSchema.methods.gravatar = function gravatar(size) {
-  if (!size) {
-    size = 200;
-  }
-  if (!this.email) {
-    return `https://gravatar.com/avatar/?s=${size}&d=retro`;
-  }
-  const md5 = crypto.createHash('md5').update(this.email).digest('hex');
-  return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
 };
 
 /**
