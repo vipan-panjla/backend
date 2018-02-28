@@ -123,6 +123,7 @@ app.get('/api/user', auth.isAuthenticated, apiController.getCurrentUser);
 app.get('/api/user/:userId', apiController.getUser);
 app.put('/api/user/:userId', apiController.updateUser);
 app.post('/api/fileUpload', auth.isAuthenticated, apiController.uploadImage);
+app.post('/api/stripePay',apiController.stripe),
 
 /**
  * Error Handler.

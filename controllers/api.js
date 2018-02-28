@@ -2,6 +2,11 @@ const passport = require('passport');
 const fs = require('fs');
 // multer required for the file uploads
 var multer = require('multer');
+
+ var config = require('../config/environment')
+ // stripe key
+ var stripe = require('stripe')(config.stripe.apiKey);
+ 
 // set the directory for the uploads to the uploaded to
 var DIR = './uploads/';
 //define the type of upload multer would be doing and pass in its destination, in our case, its a single file with the name photo
@@ -198,3 +203,45 @@ exports.uploadImage = (req, res, next) => {
     });
   });
 }
+
+/**
+ * POST /stripe
+ * make stripe payment
+ */
+exports.stripe = (req, res, next) => {
+  // for testing;
+  // call tripe api for paying the payment
+  var userId = req.body.userId
+      stripe.charges.create({
+        amount: req.body.amount,
+        currency: "usd",
+        description: req.body.token.email,
+        // source: "tok_bypassPending",
+         source: req.body.token.id,
+      }, function(err, charge) {
+        if(err)
+        {
+          console.log(err);
+          return res.status(401).json({ errors: {'stripe': ["error occured during payment"]}}); 
+        }
+        else
+        {
+          console.log(charge);
+          // set flag if paid
+          User.findById(userId, (err, dbUser) => {
+            if (err) { 
+              console.log(err);
+              return res.status(401).json({ errors: {'User': ['error to update user information']}});  
+            }
+            dbUser.ispaid = true;
+            dbUser.stripeToken = charge.id;
+            dbUser.save((err) => {
+              return res.json({
+                user: dbUser,
+                message: "successfully Paid"
+              });
+            });
+          });
+        }
+      });
+};

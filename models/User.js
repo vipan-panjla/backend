@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema({
   token: {type: String, required: true},
   phone: String,
   address: String,
+  ispaid: {type:Boolean, default: false},
+  stripeToken: String,
   picture: {type:String, default: 'uploads/user.png'}
 }, { timestamps: true });
 

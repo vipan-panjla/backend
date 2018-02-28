@@ -11,5 +11,9 @@ module.exports = {
     'http://bytecodetechnologies.co.in/',
     'http://bytecodetechnologies.co.in/jive',
     'http://bytecodetechnologies.co.in/jive/'
-  ]
+  ],
+  stripe:{
+    apiKey: 'sk_test_dhdveRA7pch0mMK9PpT8gHaH' // my account
+  },
+  
 };
