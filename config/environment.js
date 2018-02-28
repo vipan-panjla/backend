@@ -13,7 +13,7 @@ module.exports = {
     'http://bytecodetechnologies.co.in/jive/'
   ],
   stripe:{
-    apiKey: 'sk_test_dhdveRA7pch0mMK9PpT8gHaH' // my account
+    apiKey: 'sk_test_mRU4BQ2S5rVyPHLYYKkpdx01' // client account
   },
   
 };
