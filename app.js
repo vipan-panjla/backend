@@ -117,13 +117,13 @@ app.get('/', homeController.index);
 /**
  * API routes.
  */
-app.post('/api/login', apiController.login);
-app.post('/api/register', apiController.register);
-app.get('/api/user', auth.isAuthenticated, apiController.getCurrentUser);
-app.get('/api/user/:userId', apiController.getUser);
-app.put('/api/user/:userId', apiController.updateUser);
-app.post('/api/fileUpload', auth.isAuthenticated, apiController.uploadImage);
-app.post('/api/stripePay',apiController.stripe),
+app.post('/api/login', apiController.login);             //login method path: controllers/api.js
+app.post('/api/register', apiController.register);       //register method path: controllers/api.js
+app.get('/api/user', auth.isAuthenticated, apiController.getCurrentUser);      //getting current login user detail method path: controllers/api.js
+app.get('/api/user/:userId', apiController.getUser);     //getting user detail by id method path: controllers/api.js
+app.put('/api/user/:userId', apiController.updateUser);  //update user details method path: controllers/api.js
+app.post('/api/fileUpload', auth.isAuthenticated, apiController.uploadImage);    //uploading profile picture method path: controllers/api.js
+app.post('/api/stripePay',apiController.stripe),         //payment method stripe path: controllers/api.js
 
 /**
  * Error Handler.
