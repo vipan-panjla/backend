@@ -21,6 +21,7 @@ const multer = require('multer');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
+
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -42,6 +43,11 @@ const auth = require('./services/auth.service');
  */
 const passportConfig = require('./config/passport');
 const config = require('./config/environment');
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+mongoURLLabel = "";
 
 /**
  * Create Express server.
@@ -133,9 +139,11 @@ app.use(errorHandler());
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), () => {
-  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
-  console.log('  Press CTRL-C to stop\n');
-});
+// app.listen(app.get('port'), () => {
+//   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
+//   console.log('  Press CTRL-C to stop\n');
+// });
 
+app.listen(port, ip);
+console.log('Server running on http://%s:%s', ip, port);
 module.exports = app;
